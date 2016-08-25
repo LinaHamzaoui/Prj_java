@@ -1,0 +1,230 @@
+package Location;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.JMenuBar;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.awt.Color;
+import java.awt.Dimension;
+import javax.swing.JList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JProgressBar;
+import javax.swing.JTextPane;
+import java.awt.SystemColor;
+import java.awt.Font;
+import javax.swing.JScrollPane;
+
+public class InterfaceAcceuil extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					InterfaceAcceuil frame = new InterfaceAcceuil();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public InterfaceAcceuil() {
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1000, 700);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JButton btnGrerLesEmprunteurs = new JButton("Aj/Supp emprunteurs");
+		btnGrerLesEmprunteurs.setFont(new Font("Courier", Font.PLAIN, 11));
+		btnGrerLesEmprunteurs.setBounds(354, 11, 165, 50);
+		contentPane.add(btnGrerLesEmprunteurs);
+		btnGrerLesEmprunteurs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				InterfaceEmprunteur b = new InterfaceEmprunteur();
+				b.setVisible(true);
+			}
+
+		});
+		
+		JButton btnGrerLesVhicules = new JButton("Aj/Supp Vehicules");
+		btnGrerLesVhicules.setFont(new Font("Courier", Font.PLAIN, 11));
+		btnGrerLesVhicules.setBounds(529, 11, 165, 50);
+		contentPane.add(btnGrerLesVhicules);
+		btnGrerLesVhicules.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				InterfaceVehicule b = new InterfaceVehicule();
+				b.setVisible(true);
+			}
+
+		});
+		
+		JButton btnGrerLesLocations = new JButton("Gerer Location");
+		btnGrerLesLocations.setFont(new Font("Courier", Font.PLAIN, 11));
+		btnGrerLesLocations.setBounds(704, 11, 165, 50);
+		contentPane.add(btnGrerLesLocations);
+		btnGrerLesLocations.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				InterfaceLocation b = new InterfaceLocation();
+				b.setVisible(true);
+			}
+
+		});
+		
+		JButton btnOptionsSupplmentaires = new JButton("Sortir");
+		btnOptionsSupplmentaires.setFont(new Font("Courier", Font.PLAIN, 11));
+		btnOptionsSupplmentaires.setBackground(Color.RED);
+		btnOptionsSupplmentaires.setBounds(879, 11, 105, 50);
+		contentPane.add(btnOptionsSupplmentaires);
+		btnOptionsSupplmentaires.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				InterfaceConnexion b = new InterfaceConnexion();
+				b.setVisible(true);
+			}
+
+		});
+		
+		JTextPane txtpnAdministrateur = new JTextPane();
+		txtpnAdministrateur.setEditable(false);
+		txtpnAdministrateur.setText("Admin");
+		txtpnAdministrateur.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 45));
+		txtpnAdministrateur.setBackground(SystemColor.menu);
+		txtpnAdministrateur.setBounds(10, 0, 334, 65);
+		contentPane.add(txtpnAdministrateur);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(74, 244, 835, 398);
+		contentPane.add(scrollPane);
+		
+		final JTextPane textPane = new JTextPane();
+		scrollPane.setViewportView(textPane);
+		textPane.setEditable(false);
+		
+		JButton btnVehicules = new JButton("Veh");
+		btnVehicules.setBounds(188, 211, 105, 23);
+		contentPane.add(btnVehicules);
+		btnVehicules.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					String s = Connexion.executeQuery("SELECT * FROM vehicule");
+					textPane.setText(s);
+					textPane.setFont(new Font("Courier", Font.PLAIN, 12));
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+			}
+
+		});
+		
+		JButton btnEmprunteurs = new JButton("Emp");
+		btnEmprunteurs.setBounds(75, 211, 105, 23);
+		contentPane.add(btnEmprunteurs);
+		btnEmprunteurs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String s=Connexion.executeQuery("SELECT * FROM emprunteur");
+					textPane.setText(s);
+					textPane.setFont(new Font("Courier", Font.PLAIN, 12));
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+			}
+
+		});
+		
+		JButton btnLocations = new JButton("L");
+		btnLocations.setBounds(303, 211, 105, 23);
+		contentPane.add(btnLocations);
+		btnLocations.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String s=Connexion.executeQuery("SELECT * FROM location");
+					textPane.setText(s);
+					textPane.setFont(new Font("Courier", Font.PLAIN, 12));
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+			}
+
+		});
+		
+		JButton btnAdresses = new JButton("Adr");
+		btnAdresses.setBounds(418, 211, 105, 23);
+		contentPane.add(btnAdresses);
+		btnAdresses.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String s=Connexion.executeQuery("SELECT * FROM adresse");
+					textPane.setText(s);
+					textPane.setFont(new Font("Courier", Font.PLAIN, 12));
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+			}
+
+		});
+		
+		JButton btnDevis = new JButton("Devis");
+		btnDevis.setBounds(529, 211, 105, 23);
+		contentPane.add(btnDevis);
+		btnDevis.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String s=Connexion.executeQuery("SELECT * FROM devis");
+					textPane.setText(s);
+					textPane.setFont(new Font("Courier", Font.PLAIN, 12));
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+			}
+
+		});
+	}
+}
